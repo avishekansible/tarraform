@@ -1,0 +1,36 @@
+stages:
+- stage: validate
+  jobs:
+  - job: validate
+    continueOnError: false
+    steps:
+    - task: TerraformInstaller@0
+      displayName: install
+      inputs:
+        terraformVersion: '0.13.7'
+    - task: TerraformTaskV2@2
+      displayName: init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'azure-spn'
+        backendAzureRmResourceGroupName: 'terraform-rg'
+        backendAzureRmStorageAccountName: 'aviaccount'
+        backendAzureRmContainerName: 'avicontainer'
+        backendAzureRmKey: 'terraform.tfstates'
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+    - task: TerraformTaskV2@2
+      displayName: Plan
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        environmentServiceNameAzureRM: 'azure-spn'
+    - task: TerraformTaskV2@2
+      displayName: apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        environmentServiceNameAzureRM: 'azure-spn'
