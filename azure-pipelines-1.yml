@@ -1,0 +1,39 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+ - task: TerraformInstaller@0
+   displayName: install
+   inputs:
+     terraformVersion: '0.13.7'
+ - task: TerraformTaskV2@2
+   displayName: init
+   inputs:
+     provider: 'azurerm'
+     command: 'init'
+     backendServiceArm: 'Visual Studio Enterprise Subscription(67cd5e43-3159-4a8b-87ac-965c240f1524)'
+     backendAzureRmResourceGroupName: 'terraform-rg'
+     backendAzureRmStorageAccountName: 'aviaccount'
+     backendAzureRmContainerName: 'avicontainer'
+     backendAzureRmKey: 'terraform2.tstate'
+ - task: TerraformTaskV2@2
+   displayName: validate
+   inputs:
+     provider: 'azurerm'
+     command: 'validate'
+ - task: TerraformTaskV2@2
+   displayName: plan
+   inputs:
+     provider: 'azurerm'
+     command: 'plan'
+     environmentServiceNameAzureRM: 'Visual Studio Enterprise Subscription(67cd5e43-3159-4a8b-87ac-965c240f1524)'
+ - task: TerraformTaskV2@2
+   displayName: apply
+   inputs:
+     provider: 'azurerm'
+     command: 'apply'
+     environmentServiceNameAzureRM: 'Visual Studio Enterprise Subscription(67cd5e43-3159-4a8b-87ac-965c240f1524)'
+    
