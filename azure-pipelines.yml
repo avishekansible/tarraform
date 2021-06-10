@@ -8,16 +8,16 @@ steps:
 - task: TerraformInstaller@0
   displayName: Install
   inputs:
-    terraformVersion: $(terraformversion)
+    terraformVersion: $(TerraformVersion)
 - task: TerraformTaskV2@2
   displayName: Init
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(ComponentFolderName)'
     backendServiceArm: $(ServicePrincipleName)
     backendAzureRmResourceGroupName: $(ResourceGroupName)
-    backendAzureRmStorageAccountName: $(storageaccount)
+    backendAzureRmStorageAccountName: $(StorageAccountName)
     backendAzureRmContainerName: $(ContainerName)
     backendAzureRmKey: $(tfstateFileName)
 
@@ -32,7 +32,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(ComponentFolderName)'
     environmentServiceNameAzureRM: $(ServicePrincipleName)
 
 - task: TerraformTaskV2@2
@@ -40,6 +40,6 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(ComponentFolderName)'
     environmentServiceNameAzureRM: $(ServicePrincipleName)
 
