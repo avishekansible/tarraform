@@ -14,8 +14,8 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(component)'
-    backendServiceArm: $(subscription)
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    backendServiceArm: $(ServicePrincipleName)
     backendAzureRmResourceGroupName: $(ResourceGroupName)
     backendAzureRmStorageAccountName: $(storageaccount)
     backendAzureRmContainerName: $(ContainerName)
@@ -32,14 +32,14 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(component)'
-    environmentServiceNameAzureRM: $(subscription)
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    environmentServiceNameAzureRM: $(ServicePrincipleName)
 
 - task: TerraformTaskV2@2
   displayName: Apply and Deploy
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(component)'
-    environmentServiceNameAzureRM: $(subscription)
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(componentfoldername)'
+    environmentServiceNameAzureRM: $(ServicePrincipleName)
 
