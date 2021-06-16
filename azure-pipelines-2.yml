@@ -15,4 +15,4 @@ steps:
  - ${{ each filename in parameters.components }}:
    - task: TerraformInstaller@0
      inputs:
-       terraformVersion: '0.13.7'
+       terraformVersion: '0.13.7' 
