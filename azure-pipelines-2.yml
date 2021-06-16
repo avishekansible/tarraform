@@ -15,7 +15,7 @@ steps:
  - task: TerraformInstaller@0
    displayName: Install
    inputs:
-     terraformVersion: '0.13.7'
+     terraformVersion: $(TerraformVersion)
 
  - ${{ each value in parameters.components }}:
    - task: TerraformTaskV2@2
@@ -24,10 +24,12 @@ steps:
        provider: 'azurerm'
        command: 'init'
        workingDirectory: '$(System.DefaultWorkingDirectory)/${{ value }}'
-       backendServiceArm: 'azure-test1'
-       backendAzureRmResourceGroupName: 'terraform-rg'
-       backendAzureRmStorageAccountName: 'aviaccount'
-       backendAzureRmContainerName: 'avicontainer'
-       backendAzureRmKey: 'terraform.tfstate'
-   
+       backendServiceArm: $(ServicePrincipleName)
+       backendAzureRmResourceGroupName: $(ResourceGroupName)
+       backendAzureRmStorageAccountName: $(StorageAccountName)
+       backendAzureRmContainerName: $(ContainerName)
+       backendAzureRmKey: $(tfstateFileName)
+
+
+
  
