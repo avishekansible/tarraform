@@ -20,7 +20,7 @@ steps:
      inputs:
        provider: 'azurerm'
        command: 'init'
-       workingDirectory: '$(System.DefaultWorkingDirectory)/$(value)'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ value }}'
        backendServiceArm: 'azure-test1'
        backendAzureRmResourceGroupName: 'terraform-rg'
        backendAzureRmStorageAccountName: 'aviaccount'
