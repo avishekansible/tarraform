@@ -43,7 +43,3 @@ steps:
        command: 'plan'
        workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
        environmentServiceNameAzureRM: $(ServicePrincipleName)
-
-
-
- 
