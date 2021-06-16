@@ -19,7 +19,7 @@ steps:
 
  - ${{ each filename in parameters.components }}:
    - task: TerraformTaskV2@2
-     displayName: Init on ${{ value }}
+     displayName: Init on ${{ filename }}
      inputs:
        provider: 'azurerm'
        command: 'init'
@@ -31,13 +31,13 @@ steps:
        backendAzureRmKey: $(tfstateFileName)
 
    - task: TerraformTaskV2@2
-     displayName: Validate on ${{ value }}
+     displayName: Validate on ${{ filename }}
      inputs:
       provider: 'azurerm'
       command: 'validate'
 
    - task: TerraformTaskV2@2
-     displayName: Plan on ${{ value }}
+     displayName: Plan on ${{ filename }}
      inputs:
        provider: 'azurerm'
        command: 'plan'
