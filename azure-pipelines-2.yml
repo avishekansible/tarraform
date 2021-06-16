@@ -13,12 +13,8 @@ parameters:
      
 steps:
  - ${{ each value in parameters.components }}:
-   - task: TerraformInstaller@0
-     displayName: Install
-     inputs:
-       terraformVersion: '0.13.7'
    - task: TerraformTaskV2@2
-     displayName: INIT for ${{ value }}
+     displayName: Init on ${{ value }}
      inputs:
        provider: 'azurerm'
        command: 'init'
