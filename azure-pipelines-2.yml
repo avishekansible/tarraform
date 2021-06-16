@@ -12,7 +12,19 @@ parameters:
      - storageaccount
      
 steps:
- - ${{ each filename in parameters.components }}:
+ - ${{ each value in parameters.components }}:
    - task: TerraformInstaller@0
      inputs:
-       terraformVersion: '0.13.7' 
+       terraformVersion: '0.13.7'
+   - task: TerraformTaskV2@2
+     inputs:
+       provider: 'azurerm'
+       command: 'init'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/$(value)'
+       backendServiceArm: 'azure-test1'
+       backendAzureRmResourceGroupName: 'terraform-rg'
+       backendAzureRmStorageAccountName: 'aviaccount'
+       backendAzureRmContainerName: 'avicontainer'
+       backendAzureRmKey: 'terraform.tfstate'
+   
+ 
