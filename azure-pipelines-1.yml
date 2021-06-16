@@ -12,7 +12,7 @@ parameters:
      - storageaccount
   
 steps:
- - ${{ each filename in parameters.components }}
+- ${{ each filename in parameters.components }}
       - task: TerraformTaskV2@2
         displayName: Init
         inputs:
