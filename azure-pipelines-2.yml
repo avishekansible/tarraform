@@ -31,10 +31,10 @@ steps:
        backendAzureRmKey: $(tfstateFileName)
 
    - task: TerraformTaskV2@2
-        displayName: Validate
-        inputs:
-          provider: 'azurerm'
-          command: 'validate'
+     displayName: Validate
+     inputs:
+      provider: 'azurerm'
+      command: 'validate'
 
 
 
