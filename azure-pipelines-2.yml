@@ -17,13 +17,13 @@ steps:
    inputs:
      terraformVersion: $(TerraformVersion)
 
- - ${{ each value in parameters.components }}:
+ - ${{ each filename in parameters.components }}:
    - task: TerraformTaskV2@2
      displayName: Init on ${{ value }}
      inputs:
        provider: 'azurerm'
        command: 'init'
-       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ value }}'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ filename }}'
        backendServiceArm: $(ServicePrincipleName)
        backendAzureRmResourceGroupName: $(ResourceGroupName)
        backendAzureRmStorageAccountName: $(StorageAccountName)
@@ -31,10 +31,18 @@ steps:
        backendAzureRmKey: $(tfstateFileName)
 
    - task: TerraformTaskV2@2
-     displayName: Validate
+     displayName: Validate on ${{ value }}
      inputs:
       provider: 'azurerm'
       command: 'validate'
+
+   - task: TerraformTaskV2@2
+     displayName: Plan on ${{ value }}
+     inputs:
+       provider: 'azurerm'
+       command: 'plan'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+       environmentServiceNameAzureRM: $(ServicePrincipleName)
 
 
 
