@@ -1,3 +1,9 @@
+trigger:
+ - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
 parameters:
   - name: component
     type: object
@@ -5,13 +11,5 @@ parameters:
      - resourcegroup
      - storageaccount
 steps:
-- ${{ each filename in parameters.component }}
-- task: TerraformTaskV2@2
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendServiceArm: 'azure-test1'
-    backendAzureRmResourceGroupName: 'terraform-rg'
-    backendAzureRmStorageAccountName: 'aviaccount'
-    backendAzureRmContainerName: 'avicontainer'
-    backendAzureRmKey: 'test.tfstate'
+- ${{ each value in parameters.component }}
+  - script: echo ${{ value }}
