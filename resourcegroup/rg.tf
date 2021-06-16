@@ -1,9 +1,15 @@
+terraform {
+  backend "azurerm" {
+  }
+}
+
 provider "azurerm" {
-  version = "= 2.62.0"
+  version = ">=2.0"
+  # The "feature" block is required for AzureRM provider 2.x.
   features {}
 }
 
 resource "azurerm_resource_group" "rg" {
-  name = "test-rg1"
-  location = "West Europe"
+  name     = "test-rg1"
+  location = "westeurope"
 }
