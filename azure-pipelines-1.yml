@@ -13,7 +13,6 @@ parameters:
   
 steps:
  - ${{ each filename in parameters.components }}
-
       - task: TerraformTaskV2@2
         displayName: Init
         inputs:
