@@ -5,20 +5,22 @@ pool:
   vmImage: 'ubuntu-latest'
 
 parameters:
-  - name: component
+  - name: components
     type: object
     default:
      - resourcegroup
      - storageaccount
+  
 steps:
-- ${{ each value in parameters.component }}
-- task: TerraformTaskV2@2
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/$(value)'
-    backendServiceArm: 'azure-test1'
-    backendAzureRmResourceGroupName: 'terraform-rg'
-    backendAzureRmStorageAccountName: 'aviaccount'
-    backendAzureRmContainerName: 'avicontainer'
-    backendAzureRmKey: 'terraform.tfstate'
+- ${{ each filename in parameters.components }}
+      - task: TerraformTaskV2@2
+        displayName: Init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+          backendServiceArm: $(ServicePrincipleName)
+          backendAzureRmResourceGroupName: $(ResourceGroupName)
+          backendAzureRmStorageAccountName: $(StorageAccountName)
+          backendAzureRmContainerName: $(ContainerName)
+          backendAzureRmKey: $(tfstateFileName)
