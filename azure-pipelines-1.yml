@@ -1,0 +1,52 @@
+trigger:
+ - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+  - name: components
+    type: object
+    default:
+     - resourcegroup
+     - storageaccount
+  
+steps:
+ - ${{ each filename in parameters.components }}
+      - task: TerraformInstaller@0
+        displayName: Install
+        inputs:
+          terraformVersion: $(TerraformVersion)
+      - task: TerraformTaskV2@2
+        displayName: Init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+          backendServiceArm: $(ServicePrincipleName)
+          backendAzureRmResourceGroupName: $(ResourceGroupName)
+          backendAzureRmStorageAccountName: $(StorageAccountName)
+          backendAzureRmContainerName: $(ContainerName)
+          backendAzureRmKey: $(tfstateFileName)
+
+      - task: TerraformTaskV2@2
+        displayName: Validate
+        inputs:
+          provider: 'azurerm'
+          command: 'validate'
+
+      - task: TerraformTaskV2@2
+        displayName: Plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+          environmentServiceNameAzureRM: $(ServicePrincipleName)
+
+      - task: TerraformTaskV2@2
+        displayName: Apply and Deploy
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+          environmentServiceNameAzureRM: $(ServicePrincipleName)
