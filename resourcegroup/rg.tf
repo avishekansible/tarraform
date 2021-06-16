@@ -1,12 +1,7 @@
 provider "azurerm" {
-  version = "= 2.18"
+  version = "= 2.62.0"
   features {}
 }
-
-terraform {
-  backend "azurerm"{
-  }
-}  
 
 resource "azurerm_resource_group" "rg" {
   name = "test-rg1"
