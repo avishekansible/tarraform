@@ -5,11 +5,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 parameters:
-  - name: components #Listing the components 
+  - name: components
     type: object
     default:
-     - Bootstrap
-     - Network
+     - resourcegroup
+     - storageaccount
      
 steps:
  - ${{ each filename in parameters.components }}:
