@@ -11,5 +11,14 @@ parameters:
      - resourcegroup
      - storageaccount
 steps:
-- ${{ each value in parameters.component }}
-  - script: echo ${{ value }}
+- ${{ each value in parameters.component }}:
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/$(value)'
+    backendServiceArm: 'azure-test1'
+    backendAzureRmResourceGroupName: 'terraform-rg'
+    backendAzureRmStorageAccountName: 'aviaccount'
+    backendAzureRmContainerName: 'avicontainer'
+    backendAzureRmKey: 'terraform.tfstate'
