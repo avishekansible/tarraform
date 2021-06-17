@@ -41,5 +41,5 @@ steps:
      inputs:
        provider: 'azurerm'
        command: 'plan'
-       workingDirectory: '$(System.DefaultWorkingDirectory)/$(filename)'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ filename }}'
        environmentServiceNameAzureRM: $(ServicePrincipleName)
