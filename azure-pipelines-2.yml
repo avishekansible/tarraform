@@ -43,3 +43,10 @@ steps:
        command: 'plan'
        workingDirectory: '$(System.DefaultWorkingDirectory)/${{ filename }}'
        environmentServiceNameAzureRM: $(ServicePrincipleName)
+   - task: TerraformTaskV2@2
+     displayName: Apply and Deploy
+     inputs:
+       provider: 'azurerm'
+       command: 'apply'
+       workingDirectory: '$(System.DefaultWorkingDirectory)/${{ filename }}'
+       environmentServiceNameAzureRM: $(ServicePrincipleName)
