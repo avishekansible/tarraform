@@ -16,10 +16,10 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/$(ComponentFolderName)'
     backendServiceArm: $(ServicePrincipleName)
-    backendAzureRmResourceGroupName: $(ResourceGroupName)
-    backendAzureRmStorageAccountName: $(StorageAccountName)
-    backendAzureRmContainerName: $(ContainerName)
-    backendAzureRmKey: $(tfstateFileName)
+    #backendAzureRmResourceGroupName: $(ResourceGroupName)
+    #backendAzureRmStorageAccountName: $(StorageAccountName)
+    #backendAzureRmContainerName: $(ContainerName)
+    #backendAzureRmKey: $(tfstateFileName)
 
 - task: TerraformTaskV2@2
   displayName: Validate
