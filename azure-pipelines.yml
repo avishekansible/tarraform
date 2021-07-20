@@ -19,7 +19,7 @@ steps:
     backendAzureRmResourceGroupName: $(ResourceGroupName)
     backendAzureRmStorageAccountName: $(StorageAccountName)
     backendAzureRmContainerName: $(ContainerName)
-    #backendAzureRmKey: $(tfstateFileName)
+    backendAzureRmKey: $(tfstateFileName)
 
 - task: TerraformTaskV2@2
   displayName: Validate
